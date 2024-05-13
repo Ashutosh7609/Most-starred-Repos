@@ -16,10 +16,11 @@ import {
 // Saga to fetch repositories
 function* fetchReposSaga(data) {
   try {
-    const response = yield call(axios.get, `${process.env.REACT_APP_API_URL}/search/repositories?q=created:>${data.payload.formattedDate}&sort=stars&order=desc&page=${data.payload.page}`, {
-      headers: {
-        Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
-      },
+    // const response = yield call(axios.get, `${process.env.REACT_APP_API_URL}/search/repositories?q=created:>${data.payload.formattedDate}&sort=stars&order=desc&page=${data.payload.page}`, {
+      const response = yield call(axios.get, `https://api.github.com/search/repositories?q=created:>${data.payload.formattedDate}&sort=stars&order=desc&page=${data.payload.page}`, {
+      // headers: {
+      //   Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
+      // },
     });
     yield put(fetchReposSuccess(response.data));
   } catch (error) {
@@ -31,10 +32,11 @@ function* fetchReposSaga(data) {
 function* handleFetchCommitHistory(action) {
   try {
     const { owner, name } = action.payload;
-    const response = yield call(fetch, `${process.env.REACT_APP_API_URL}/repos/${owner}/${name}/stats/commit_activity`, {
-      headers: {
-        Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
-      },
+    // const response = yield call(fetch, `${process.env.REACT_APP_API_URL}/repos/${owner}/${name}/stats/commit_activity`, {
+      const response = yield call(fetch, `https://api.github.com/repos/${owner}/${name}/stats/commit_activity`, {
+      // headers: {
+      //   Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
+      // },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -50,10 +52,11 @@ function* handleFetchCommitHistory(action) {
 function* handleFetchContributorStats(action) {
   try {
     const { owner, name } = action.payload;
-    const response = yield call(axios.get, `${process.env.REACT_APP_API_URL}/repos/${owner}/${name}/stats/contributors`, {
-      headers: {
-        Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
-      },
+    const response = yield call(axios.get, `https://api.github.com/repos/${owner}/${name}/stats/contributors`, {
+      // const response = yield call(axios.get, `${process.env.REACT_APP_API_URL}/repos/${owner}/${name}/stats/contributors`, {
+      // headers: {
+      //   Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
+      // },
     });
     yield put(fetchContributorStatsSuccess(response.data));
   } catch (error) {
@@ -65,10 +68,11 @@ function* handleFetchContributorStats(action) {
 function* handleFetchCodeFrequency(action) {
   try {
     const { owner, name } = action.payload;
-    const response = yield call(fetch, `${process.env.REACT_APP_API_URL}/repos/${owner}/${name}/stats/code_frequency`, {
-      headers: {
-        Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
-      },
+    // const response = yield call(fetch, `${process.env.REACT_APP_API_URL}/repos/${owner}/${name}/stats/code_frequency`, {
+      const response = yield call(fetch, `https://api.github.com/repos/${owner}/${name}/stats/code_frequency`, {
+      // headers: {
+      //   Authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`,
+      // },
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
